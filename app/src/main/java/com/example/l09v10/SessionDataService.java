@@ -29,7 +29,7 @@ public class SessionDataService {
         void onResponse(List<SessionModel> sessionModel);
     }
     ServerInfo serverInfo = new ServerInfo();
-    public void getSensorDBData(String sessionID, DataBySessionID dataBySessionID){
+    public void getSessionDBData(String sessionID, DataBySessionID dataBySessionID){
         List<SessionModel> sessionModels = new ArrayList<>();
         // Dostosuj IP zgodnie ze specyfikacją własnego serwera
         String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/samplerest/viewsamples?idSensor="+sessionID;//do napisania akcja w yii php
@@ -86,6 +86,24 @@ public class SessionDataService {
                     @Override
                     public void onResponse(JSONObject response) {
                         Toast.makeText(context, response.toString(),Toast.LENGTH_SHORT).show();
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, error.toString(),Toast.LENGTH_SHORT).show();
+            }
+        });
+        MySingleton.getInstance(context).addToRequestQueue(request);
+    }
+
+    public void deleteSessionDBData(String idSession){
+        String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/sessionrests/"+idSession;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.DELETE, url, null, new
+                Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        Toast.makeText(context, response.toString(),Toast.LENGTH_SHORT).show();
+
                     }
                 }, new Response.ErrorListener() {
             @Override

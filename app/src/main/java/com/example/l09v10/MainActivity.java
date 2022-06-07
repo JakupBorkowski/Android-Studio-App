@@ -54,7 +54,12 @@ public class MainActivity extends AppCompatActivity {
         Intent DeleteSensorIntent = new Intent(this, DeleteSensor.class);
         startActivity(DeleteSensorIntent);
     }
+    public void DeleteSessionActivity(View Button)
+    {
+        Intent DeleteSessionIntent = new Intent(this, DeleteSession.class);
+        startActivity(DeleteSessionIntent);
+    }
 
 
-    
+
 }
