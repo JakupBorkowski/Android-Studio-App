@@ -28,11 +28,11 @@ public class SessionDataService {
         void onError(String message);
         void onResponse(List<SessionModel> sessionModel);
     }
-
+    ServerInfo serverInfo = new ServerInfo();
     public void getSensorDBData(String sessionID, DataBySessionID dataBySessionID){
         List<SessionModel> sessionModels = new ArrayList<>();
         // Dostosuj IP zgodnie ze specyfikacją własnego serwera
-        String url = "http://10.160.33.11:8080/PolitechnikaView/web/samplerest/viewsamples?idSensor="+sessionID;//do napisania akcja w yii php
+        String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/samplerest/viewsamples?idSensor="+sessionID;//do napisania akcja w yii php
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url,null, new
                 Response.Listener<JSONArray>() {
                     @Override
@@ -78,7 +78,7 @@ public class SessionDataService {
     }
 
     public void postSessionDBData(SessionModel sessionModel){
-        String url = "http://10.160.33.11:8080/PolitechnikaView/web/sessionrests";
+        String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/sessionrests";
         JSONObject  sessionData;
         sessionData = sessionDataToJSON(sessionModel);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url,sessionData, new

@@ -34,11 +34,11 @@ public class SensorDataService {
         void onError(String message);
         void onResponse(List<GyroscopeModel> gyroscopeModel);
     }
-
+    ServerInfo serverInfo= new ServerInfo();
     public void getSensorDBData(String sensorID, DataBySensorID dataBySensorID){
         List<GyroscopeModel> gyroscopeModels = new ArrayList<>();
         // Dostosuj IP zgodnie ze specyfikacją własnego serwera
-        String url = "http://10.160.33.11:8080/PolitechnikaView/web/samplerest/viewsamples?idSensor="+sensorID;
+        String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaView/web/samplerest/viewsamples?idSensor="+sensorID;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url,null, new
                 Response.Listener<JSONArray>() {
                     @Override
@@ -59,8 +59,8 @@ public class SensorDataService {
                                 //GyroscopeModel gyroscopeModel = objectMapper.readValue((DataInput) oneSampleFromAPI, GyroscopeModel.class);
                                 System.out.println(oneSampleFromAPI);
                                 oneSampleFromAPI.getInt("idSensor");
-                                GyroscopeModel kuba = new GyroscopeModel(oneSampleFromAPI.getInt("idSample"),oneSampleFromAPI.getInt("idSensor"), (float) oneSampleFromAPI.getDouble("value_1"),(float) oneSampleFromAPI.getDouble("value_2"),(float) oneSampleFromAPI.getDouble("value_3"),oneSampleFromAPI.getString("timestamp"));
-                                gyroscopeModels.add(kuba);
+                                GyroscopeModel gyroscopeModel = new GyroscopeModel(oneSampleFromAPI.getInt("idSample"),oneSampleFromAPI.getInt("idSensor"), (float) oneSampleFromAPI.getDouble("value_1"),(float) oneSampleFromAPI.getDouble("value_2"),(float) oneSampleFromAPI.getDouble("value_3"),oneSampleFromAPI.getString("timestamp"));
+                                gyroscopeModels.add(gyroscopeModel);
 
 
                             }
@@ -95,7 +95,7 @@ public class SensorDataService {
     }
 
     public void postSensorDBData(GyroscopeModel gyroscopeModel){
-        String url = "http://10.160.33.11:8080/PolitechnikaView/web/samplerests";
+        String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaView/web/samplerests";
         JSONObject sensorData;
         sensorData = sensorDataToJSON(gyroscopeModel);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url,sensorData, new
