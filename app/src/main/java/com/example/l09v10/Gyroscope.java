@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class Gyroscope extends AppCompatActivity  implements SensorEventListener {
@@ -30,8 +32,15 @@ public class Gyroscope extends AppCompatActivity  implements SensorEventListener
     private Button btn_getSensorData;
     private Button btn_postSensorData;
     private EditText et_sensorID;
+    private EditText et_okres;
     private ListView lv_dbSensorData;
     private float[] GyroscopeData = new float[3];
+    long start_time = System.currentTimeMillis(); //ZADANIE 7
+    int okresRCV;
+    SampleDataService sampleDataService = new SampleDataService(Gyroscope.this);
+    boolean timestamp_flag;
+    Timestamp timestampNew;
+    Date today;
 
 
 
@@ -41,11 +50,14 @@ public class Gyroscope extends AppCompatActivity  implements SensorEventListener
         setContentView(R.layout.activity_gyroscope);
 
         SensorDataService sensorDataService = new SensorDataService(Gyroscope.this);
+
         tv_SensorData =findViewById(R.id.actualSensorData);
         btn_getSensorData=findViewById(R.id.getSensorData);
         btn_postSensorData=findViewById(R.id.postSensorData);
         lv_dbSensorData=findViewById(R.id.lv_DBSensorData);
         et_sensorID=findViewById(R.id.pt_idSensor);
+        et_okres=findViewById(R.id.pt_okres);
+        timestamp_flag=true;
 
 
         btn_getSensorData.setOnClickListener(new View.OnClickListener(){
@@ -65,6 +77,7 @@ public class Gyroscope extends AppCompatActivity  implements SensorEventListener
                                 lv_dbSensorData.setAdapter(arrayAdapter);
                             }
                         });
+
             }
         });
         btn_postSensorData.setOnClickListener(new View.OnClickListener(){
@@ -90,6 +103,8 @@ public class Gyroscope extends AppCompatActivity  implements SensorEventListener
         }
 
 
+        start_time = System.currentTimeMillis(); //ZADANIE 7
+        okresRCV = getIntent().getExtras().getInt("keyokres");//ZADANIE7
 
     }
 
@@ -113,15 +128,27 @@ public class Gyroscope extends AppCompatActivity  implements SensorEventListener
 
     @Override
     public void onSensorChanged(SensorEvent event) {
+        long actual_time = System.currentTimeMillis();//ZADANIE 7
+        if(actual_time-start_time>=okresRCV) {
+        if(timestamp_flag) {
+        }
+            timestampNew = new Timestamp(System.currentTimeMillis());
+            timestamp_flag=false;
 
 
             GyroscopeData[0] = event.values[0];
             GyroscopeData[1] = event.values[1];
             GyroscopeData[2] = event.values[2];
 
+            //et_idStartAddSession.getText().toString()
+            SampleModel sampleModel = new SampleModel(14, event.values[0],event.values[1],event.values[2],timestampNew.toString());
+            sampleDataService.postSampleDBData(sampleModel);
+
+
         //WYSWIETLANIE NA PRÓBE W polu tv_SensorData
         tv_SensorData.setText("X: "+GyroscopeData[0]+" rad/s Y: "+GyroscopeData[1]+" rad/s Z: "+GyroscopeData[0]+" rad/s");
-    }
+        start_time=System.currentTimeMillis();
+        }}
 
 
     @Override

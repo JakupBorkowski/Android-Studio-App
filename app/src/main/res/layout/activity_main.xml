@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <EditText
+        android:id="@+id/et_okres"
+        android:layout_width="167dp"
+        android:layout_height="42dp"
+        android:layout_marginTop="132dp"
+        android:layout_marginEnd="32dp"
+        android:ems="10"
+        android:hint="okres [ms]"
+        android:inputType="number"
+        android:text="100"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
     <Button
         android:id="@+id/btn_gyroscope8"
         android:layout_width="130dp"
@@ -37,13 +50,12 @@
         android:id="@+id/btn_gyroscope5"
         android:layout_width="126dp"
         android:layout_height="60dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="56dp"
+        android:layout_marginEnd="56dp"
         android:onClick="DeleteDeviceActivity"
         android:text="Delete Device"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.406"
-        app:layout_constraintStart_toEndOf="@+id/btn_gyroscope2"
-        app:layout_constraintTop_toBottomOf="@+id/btn_gyroscope6" />
+        app:layout_constraintTop_toBottomOf="@+id/et_okres" />
 
     <Button
         android:id="@+id/btn_gyroscope4"
@@ -62,10 +74,12 @@
         android:id="@+id/btn_gyroscope2"
         android:layout_width="125dp"
         android:layout_height="57dp"
-        android:layout_marginStart="64dp"
+        android:layout_marginStart="60dp"
         android:layout_marginTop="12dp"
         android:onClick="NewDeviceActivity"
         android:text="Add Device"
+        app:layout_constraintEnd_toStartOf="@+id/btn_gyroscope5"
+        app:layout_constraintHorizontal_bias="0.09"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_gyroscope" />
 
@@ -82,24 +96,15 @@
 
     <Button
         android:id="@+id/btn_gyroscope"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="117dp"
+        android:layout_height="135dp"
         android:layout_marginStart="64dp"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="84dp"
         android:onClick="GyroscopeActivity"
-        android:text="Gyroscope"
+        android:text="Wyslij dane z żyroskopu na serwer"
+        app:layout_constraintEnd_toStartOf="@+id/et_okres"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <Button
-        android:id="@+id/btn_gyroscope6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
-        android:onClick="GyroscopeActivity"
-        android:text="Gyroscope"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.404"
-        app:layout_constraintStart_toEndOf="@+id/btn_gyroscope"
-        app:layout_constraintTop_toTopOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

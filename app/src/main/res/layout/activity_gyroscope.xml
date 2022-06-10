@@ -6,27 +6,42 @@
     android:layout_height="match_parent"
     tools:context=".Gyroscope">
 
+    <EditText
+        android:id="@+id/pt_okres"
+        android:layout_width="353dp"
+        android:layout_height="65dp"
+        android:layout_marginTop="20dp"
+        android:ems="10"
+        android:hint="okres"
+        android:inputType="textPersonName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.172"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/pt_idSensor" />
+
     <Button
         android:id="@+id/getSensorData"
         android:layout_width="182dp"
         android:layout_height="51dp"
+        android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
         android:text="get sensor data"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.151"
+        app:layout_constraintBottom_toTopOf="@+id/actualSensorData"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.39" />
 
     <Button
         android:id="@+id/postSensorData"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="16dp"
         android:text="post sensor data"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.151"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/getSensorData" />
+        app:layout_constraintHorizontal_bias="0.6"
+        app:layout_constraintStart_toEndOf="@+id/getSensorData"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/actualSensorData"
@@ -57,21 +72,10 @@
         android:id="@+id/lv_DBSensorData"
         android:layout_width="310dp"
         android:layout_height="322dp"
-        android:layout_marginBottom="120dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.336"
+        app:layout_constraintHorizontal_bias="0.306"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pt_idSensor" />
-
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/lv_DBSensorData" />
+        app:layout_constraintTop_toBottomOf="@+id/pt_okres" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

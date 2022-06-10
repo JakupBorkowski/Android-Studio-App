@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.view.View;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -26,6 +27,13 @@ public class MainActivity extends AppCompatActivity {
     {
         Intent GyroscopeIntent = new Intent(this, Gyroscope.class);
         startActivity(GyroscopeIntent);
+
+        TextView okres = findViewById(R.id.et_okres);
+        int okresINT = Integer.valueOf(okres.getText().toString()).intValue();
+        GyroscopeIntent.putExtra("keyokres", okresINT);
+
+        startActivity(GyroscopeIntent);
+
     }
 
     public void NewDeviceActivity(View Button)
