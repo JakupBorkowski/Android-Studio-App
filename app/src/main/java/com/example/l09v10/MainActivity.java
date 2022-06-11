@@ -68,6 +68,12 @@ public class MainActivity extends AppCompatActivity {
         startActivity(DeleteSessionIntent);
     }
 
+    public void SessionHasSensorActivity(View Button)
+    {
+        Intent SessionHasSensorIntent = new Intent(this, SessionHasSensor.class);
+        startActivity(SessionHasSensorIntent);
+    }
+
 
 
 }

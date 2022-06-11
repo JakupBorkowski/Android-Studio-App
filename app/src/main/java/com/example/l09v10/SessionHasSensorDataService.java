@@ -16,23 +16,25 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SessionDataService {
+public class SessionHasSensorDataService {
+
+
     Context context;
 
-    public SessionDataService(Context context)
+    public SessionHasSensorDataService(Context context)
     {
         this.context=context;
     }
 
-    public interface DataBySessionID{
+    public interface DataBySessionHasSensorID{
         void onError(String message);
-        void onResponse(List<SessionModel> sessionModel);
+        void onResponse(List<SessionHasSensorModel> sessionHasSensorModel);
     }
     ServerInfo serverInfo = new ServerInfo();
-    public void getSessionDBData(String sessionID, DataBySessionID dataBySessionID){
-        List<SessionModel> sessionModels = new ArrayList<>();
+    public void getSessionHasSensorDBData(String sessionID, DataBySessionHasSensorID dataBySessionHasSensorID){
+        List<SessionHasSensorModel> sessionHasSensorModels = new ArrayList<>();
         // Dostosuj IP zgodnie ze specyfikacją własnego serwera
-        String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/samplerest/viewsamples?idSensor="+sessionID;//do napisania akcja w yii php
+        String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/sessionhassensorrest/viewsamples?idSensor="+sessionID;//do napisania akcja w yii php
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url,null, new
                 Response.Listener<JSONArray>() {
                     @Override
@@ -44,11 +46,11 @@ public class SessionDataService {
                             for(int i=0;i<response.length();i++) {
                                 JSONObject oneSampleFromAPI = (JSONObject)response.get(i);
 
-                                SessionModel sessionModel= new SessionModel(oneSampleFromAPI.getInt("idSession"),oneSampleFromAPI.getString("name"), oneSampleFromAPI.getString("start"),oneSampleFromAPI.getInt("samples"),(float)oneSampleFromAPI.getDouble("tp"));
-                                sessionModels.add(sessionModel);
+                                SessionHasSensorModel sessionHasSensorModel = new SessionHasSensorModel(oneSampleFromAPI.getInt("idSession"),oneSampleFromAPI.getInt("idSensor"));
+                                sessionHasSensorModels.add(sessionHasSensorModel);
 
                             }
-                            dataBySessionID.onResponse(sessionModels);
+                            dataBySessionHasSensorID.onResponse(sessionHasSensorModels);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -61,49 +63,40 @@ public class SessionDataService {
         });
         MySingleton.getInstance(context).addToRequestQueue(request);
     }
-    public JSONObject sessionDataToJSON(SessionModel sessionModel) {
-        JSONObject sessionData = new JSONObject();
+    public JSONObject sessionDataToJSON(SessionHasSensorModel sessionHasSensorModel) {
+        JSONObject sessionHasSensorData = new JSONObject();
         try {
-            sessionData.put("idSession", sessionModel.getIdSession());
-            sessionData.put("name", sessionModel.getName());
-            sessionData.put("start", sessionModel.getStart());
-            sessionData.put("samples", sessionModel.getSamples());
-            sessionData.put("tp", sessionModel.getTp());
+            sessionHasSensorData.put("idSession", sessionHasSensorModel.getIdSession());
+            sessionHasSensorData.put("idSensor", sessionHasSensorModel.getIdSensor());
 
-            return sessionData;
+            return sessionHasSensorData;
         } catch (Exception e) {
             Toast.makeText(context, "Something went wrong", Toast.LENGTH_SHORT).show();
         }
-        return sessionData;
+        return sessionHasSensorData;
     }
 
-    public void postSessionDBData(SessionModel sessionModel){
-        String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/sessionrests";
-        JSONObject  sessionData;
-        sessionData = sessionDataToJSON(sessionModel);
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url,sessionData, new
+    public void postSessionHasSensorDBData(SessionHasSensorModel sessionHasSensorModel){
+        String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/sessionhassensorrests";
+        JSONObject  sessionHasSensorData;
+        sessionHasSensorData = sessionDataToJSON(sessionHasSensorModel);
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url,sessionHasSensorData, new
                 Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         Toast.makeText(context, response.toString(),Toast.LENGTH_SHORT).show();
-                        //int tmp = response.getInt("idSession");
-                        //SessionModel sessionModel1 = new SessionModel(response.getInt("idSession"),response.getInt("idSensor") );
-
-
                     }
                 }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(context, error.toString(),Toast.LENGTH_SHORT).show();
-
             }
         });
         MySingleton.getInstance(context).addToRequestQueue(request);
-
     }
 
-    public void deleteSessionDBData(String idSession){
-        String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/sessionrests/"+idSession;
+    public void deleteSessionHasSensorDBData(String idSession){
+        String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/sessionhassensorrests/"+idSession;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.DELETE, url, null, new
                 Response.Listener<JSONObject>() {
                     @Override
@@ -119,8 +112,6 @@ public class SessionDataService {
         });
         MySingleton.getInstance(context).addToRequestQueue(request);
     }
-
-
 
 
 }

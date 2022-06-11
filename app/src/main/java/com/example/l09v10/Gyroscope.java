@@ -159,7 +159,7 @@ public class Gyroscope extends AppCompatActivity  implements SensorEventListener
             GyroscopeData[2] = event.values[2];
 
             //et_idStartAddSession.getText().toString()
-            SampleModel sampleModel = new SampleModel(18, event.values[0],event.values[1],event.values[2],df.format(currentDate));
+            SampleModel sampleModel = new SampleModel(14, event.values[0],event.values[1],event.values[2],df.format(currentDate));
             sampleDataService.postSampleDBData(sampleModel);
 
 

@@ -63,12 +63,23 @@
         android:layout_height="77dp"
         android:onClick="AddSessionActivity"
         android:text="Add Session"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.222"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_gyroscope3"
-        app:layout_constraintVertical_bias="0.037" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_gyroscope3" />
+
+    <Button
+        android:id="@+id/btn_gyroscope6"
+        android:layout_width="126dp"
+        android:layout_height="77dp"
+        android:onClick="SessionHasSensorActivity"
+        android:text="Add SessionHasSensor"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.221"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_gyroscope4"
+        app:layout_constraintVertical_bias="0.117" />
 
     <Button
         android:id="@+id/btn_gyroscope2"
