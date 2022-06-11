@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import java.sql.Time;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -40,7 +42,8 @@ public class Gyroscope extends AppCompatActivity  implements SensorEventListener
     SampleDataService sampleDataService = new SampleDataService(Gyroscope.this);
     boolean timestamp_flag;
     Timestamp timestampNew;
-    Date today;
+    Date date;
+    long timeMilli;
 
 
 
@@ -105,7 +108,16 @@ public class Gyroscope extends AppCompatActivity  implements SensorEventListener
 
         start_time = System.currentTimeMillis(); //ZADANIE 7
         okresRCV = getIntent().getExtras().getInt("keyokres");//ZADANIE7
-
+        if(timestamp_flag) {
+            date = new Date();
+            //This method returns the time in millis
+            timeMilli = date.getTime();
+        }
+        Date currentDate = new Date(timeMilli);
+        DateFormat df = new SimpleDateFormat("yy:MM:dd HH:mm:ss.SSS");
+        SessionDataService sessionDataService = new SessionDataService(Gyroscope.this);
+        SessionModel sessionModel = new SessionModel("sesja żyroskopu", df.format(currentDate), 20,okresRCV);
+        sessionDataService.postSessionDBData(sessionModel);
     }
 
 
@@ -131,9 +143,15 @@ public class Gyroscope extends AppCompatActivity  implements SensorEventListener
         long actual_time = System.currentTimeMillis();//ZADANIE 7
         if(actual_time-start_time>=okresRCV) {
         if(timestamp_flag) {
-        }
-            timestampNew = new Timestamp(System.currentTimeMillis());
             timestamp_flag=false;
+        }
+        else {
+            timeMilli = timeMilli + okresRCV;
+        }
+            Date currentDate = new Date(timeMilli);
+            DateFormat df = new SimpleDateFormat("yy:MM:dd HH:mm:ss.SSS");
+            timestampNew = new Timestamp(System.currentTimeMillis());
+
 
 
             GyroscopeData[0] = event.values[0];
@@ -141,7 +159,7 @@ public class Gyroscope extends AppCompatActivity  implements SensorEventListener
             GyroscopeData[2] = event.values[2];
 
             //et_idStartAddSession.getText().toString()
-            SampleModel sampleModel = new SampleModel(14, event.values[0],event.values[1],event.values[2],timestampNew.toString());
+            SampleModel sampleModel = new SampleModel(18, event.values[0],event.values[1],event.values[2],df.format(currentDate));
             sampleDataService.postSampleDBData(sampleModel);
 
 
