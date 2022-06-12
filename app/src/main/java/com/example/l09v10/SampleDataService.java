@@ -60,6 +60,42 @@ public class SampleDataService {
         });
         MySingleton.getInstance(context).addToRequestQueue(request);
     }
+
+    public void getSampleBySessionIdDBData(String sessionID, DataBySampleID dataBySampleID){
+        List<SampleModel> sampleModels = new ArrayList<>();
+        // Dostosuj IP zgodnie ze specyfikacją własnego serwera
+        String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/sessionrest/find-all-samples-sql?idSession="+sessionID;
+        url="http://172.20.10.2:8080/PolitechnikaModel/web/sessionrest/find-all-samples-sql?idSession=3";
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url,null, new
+                Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            String s=String.valueOf(response.length());
+                            Toast.makeText(context, s,Toast.LENGTH_SHORT).show();
+
+                            for(int i=0;i<response.length();i++) {
+                                JSONObject oneSampleFromAPI = (JSONObject)response.get(i);
+
+                                SampleModel sampleModel= new SampleModel(oneSampleFromAPI.getInt("idSample"),oneSampleFromAPI.getInt("idSensor"), (float) oneSampleFromAPI.getDouble("value_1"),(float) oneSampleFromAPI.getDouble("value_2"),(float) oneSampleFromAPI.getDouble("value_3"),oneSampleFromAPI.getString("timestamp"));
+                                sampleModels.add(sampleModel);
+
+                            }
+                            dataBySampleID.onResponse(sampleModels);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, error.toString(),Toast.LENGTH_SHORT).show();
+            }
+        });
+        MySingleton.getInstance(context).addToRequestQueue(request);
+    }
+
+
     public JSONObject sampleDataToJSON(SampleModel sampleModel) {
         JSONObject sampleData = new JSONObject();
         try {
@@ -112,5 +148,7 @@ public class SampleDataService {
         });
         MySingleton.getInstance(context).addToRequestQueue(request);
     }
+
+
 
 }

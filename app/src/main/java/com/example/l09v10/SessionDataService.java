@@ -61,6 +61,41 @@ public class SessionDataService {
         });
         MySingleton.getInstance(context).addToRequestQueue(request);
     }
+
+    public void getSessionBySessionIdDBData(String sessionID, DataBySessionID dataBySessionID){
+        List<SessionModel> sessionModels = new ArrayList<>();
+        // Dostosuj IP zgodnie ze specyfikacją własnego serwera
+        String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/sessionrest/find-all-samples-sql?idSession="+sessionID;
+        JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url,null, new
+                Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
+                        try {
+                            String s=String.valueOf(response.length());
+                            Toast.makeText(context, s,Toast.LENGTH_SHORT).show();
+
+                            for(int i=0;i<response.length();i++) {
+                                JSONObject oneSampleFromAPI = (JSONObject)response.get(i);
+
+                                SessionModel sessionModel= new SessionModel(oneSampleFromAPI.getInt("idSession"),oneSampleFromAPI.getString("name"), oneSampleFromAPI.getString("start"),oneSampleFromAPI.getInt("samples"),(float)oneSampleFromAPI.getDouble("tp"));
+                                sessionModels.add(sessionModel);
+
+                            }
+                            dataBySessionID.onResponse(sessionModels);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, error.toString(),Toast.LENGTH_SHORT).show();
+            }
+        });
+        MySingleton.getInstance(context).addToRequestQueue(request);
+    }
+
+
     public JSONObject sessionDataToJSON(SessionModel sessionModel) {
         JSONObject sessionData = new JSONObject();
         try {

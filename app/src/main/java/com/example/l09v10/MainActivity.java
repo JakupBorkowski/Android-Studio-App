@@ -73,6 +73,11 @@ public class MainActivity extends AppCompatActivity {
         Intent SessionHasSensorIntent = new Intent(this, SessionHasSensor.class);
         startActivity(SessionHasSensorIntent);
     }
+    public  void CheckSamplesActivity(View Button)
+    {
+        Intent CheckSamplesIntent = new Intent(this, CheckSamples.class);
+        startActivity(CheckSamplesIntent);
+    }
 
 
 

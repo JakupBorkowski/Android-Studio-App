@@ -6,76 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".Gyroscope">
 
-    <EditText
-        android:id="@+id/pt_okres"
-        android:layout_width="353dp"
-        android:layout_height="65dp"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="okres"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.172"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pt_idSensor" />
-
-    <Button
-        android:id="@+id/getSensorData"
-        android:layout_width="182dp"
-        android:layout_height="51dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:text="get sensor data"
+    <TextView
+        android:id="@+id/actualSensorData4"
+        android:layout_width="373dp"
+        android:layout_height="27dp"
+        android:text="Aktualne odczyty Żyroskopu:"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/actualSensorData"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.421"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.39" />
-
-    <Button
-        android:id="@+id/postSensorData"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
-        android:layout_marginEnd="16dp"
-        android:text="post sensor data"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.6"
-        app:layout_constraintStart_toEndOf="@+id/getSensorData"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintVertical_bias="0.523" />
 
     <TextView
         android:id="@+id/actualSensorData"
         android:layout_width="373dp"
         android:layout_height="27dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginBottom="612dp"
         android:text="actual sensor data"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.257"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/postSensorData" />
-
-    <EditText
-        android:id="@+id/pt_idSensor"
-        android:layout_width="353dp"
-        android:layout_height="65dp"
-        android:layout_marginTop="20dp"
-        android:ems="10"
-        android:hint="Sensor id"
-        android:inputType="textPersonName"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.169"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/actualSensorData" />
-
-    <ListView
-        android:id="@+id/lv_DBSensorData"
-        android:layout_width="310dp"
-        android:layout_height="322dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.306"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pt_okres" />
+        app:layout_constraintHorizontal_bias="0.421"
+        app:layout_constraintStart_toStartOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

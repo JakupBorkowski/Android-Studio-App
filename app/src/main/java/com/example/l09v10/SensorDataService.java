@@ -38,7 +38,7 @@ public class SensorDataService {
     public void getSensorDBData(String sensorID, DataBySensorID dataBySensorID){
         List<GyroscopeModel> gyroscopeModels = new ArrayList<>();
         // Dostosuj IP zgodnie ze specyfikacją własnego serwera
-        String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaView/web/samplerest/viewsamples?idSensor="+sensorID;
+        String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/sessionrest/find-all-samples-sql?idSession="+sensorID;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url,null, new
                 Response.Listener<JSONArray>() {
                     @Override

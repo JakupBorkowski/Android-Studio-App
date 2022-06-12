@@ -6,6 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <Button
+        android:id="@+id/btn_gyroscope9"
+        android:layout_width="126dp"
+        android:layout_height="77dp"
+        android:onClick="CheckSamplesActivity"
+        android:text="Get samples"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.221"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_gyroscope6"
+        app:layout_constraintVertical_bias="0.113" />
+
     <EditText
         android:id="@+id/et_okres"
         android:layout_width="167dp"
@@ -72,14 +85,13 @@
         android:id="@+id/btn_gyroscope6"
         android:layout_width="126dp"
         android:layout_height="77dp"
+        android:layout_marginTop="12dp"
         android:onClick="SessionHasSensorActivity"
         android:text="Add SessionHasSensor"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.221"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_gyroscope4"
-        app:layout_constraintVertical_bias="0.117" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_gyroscope4" />
 
     <Button
         android:id="@+id/btn_gyroscope2"

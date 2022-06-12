@@ -31,11 +31,6 @@ public class Gyroscope extends AppCompatActivity  implements SensorEventListener
     private Sensor gyroscopeSensor;
     private boolean isGyroscopeAvailable;
     private TextView tv_SensorData;
-    private Button btn_getSensorData;
-    private Button btn_postSensorData;
-    private EditText et_sensorID;
-    private EditText et_okres;
-    private ListView lv_dbSensorData;
     private float[] GyroscopeData = new float[3];
     long start_time = System.currentTimeMillis(); //ZADANIE 7
     int okresRCV;
@@ -52,46 +47,17 @@ public class Gyroscope extends AppCompatActivity  implements SensorEventListener
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gyroscope);
 
-        SensorDataService sensorDataService = new SensorDataService(Gyroscope.this);
+        SampleDataService sampleDataService = new SampleDataService(Gyroscope.this);
 
         tv_SensorData =findViewById(R.id.actualSensorData);
-        btn_getSensorData=findViewById(R.id.getSensorData);
-        btn_postSensorData=findViewById(R.id.postSensorData);
-        lv_dbSensorData=findViewById(R.id.lv_DBSensorData);
-        et_sensorID=findViewById(R.id.pt_idSensor);
-        et_okres=findViewById(R.id.pt_okres);
+        //btn_getSensorData=findViewById(R.id.getSensorData);
+        //btn_postSensorData=findViewById(R.id.postSensorData);
+        //lv_dbSensorData=findViewById(R.id.lv_DBSensorData);
+        //et_sensorID=findViewById(R.id.pt_idSensor);
         timestamp_flag=true;
 
 
-        btn_getSensorData.setOnClickListener(new View.OnClickListener(){
 
-            @Override
-            public void onClick (View v) {
-                sensorDataService.getSensorDBData(et_sensorID.getText().toString(), new
-                        SensorDataService.DataBySensorID() {
-                            @Override
-                            public void onError(String message) {
-                                Toast.makeText(Gyroscope.this, "Something wrong", Toast.LENGTH_SHORT).show();
-                            }
-                            @Override
-                            public void onResponse(List<GyroscopeModel> gyroscopeModel) {
-                                ArrayAdapter arrayAdapter = new ArrayAdapter(Gyroscope.this,
-                                        android.R.layout.simple_list_item_1, gyroscopeModel);
-                                lv_dbSensorData.setAdapter(arrayAdapter);
-                            }
-                        });
-
-            }
-        });
-        btn_postSensorData.setOnClickListener(new View.OnClickListener(){
-
-            @Override
-            public void onClick (View v) {
-                Timestamp timestampNew = new Timestamp(System.currentTimeMillis());
-                GyroscopeModel gyroscopeModel = new GyroscopeModel(Integer.valueOf(et_sensorID.getText().toString()).intValue(),GyroscopeData[0],GyroscopeData[1], GyroscopeData[2], timestampNew.toString());
-                sensorDataService.postSensorDBData(gyroscopeModel);
-            }
-        });
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         if(sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)!=null)
