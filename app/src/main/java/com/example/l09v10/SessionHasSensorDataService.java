@@ -30,11 +30,11 @@ public class SessionHasSensorDataService {
         void onError(String message);
         void onResponse(List<SessionHasSensorModel> sessionHasSensorModel);
     }
-    ServerInfo serverInfo = new ServerInfo();
+
     public void getSessionHasSensorDBData(String sessionID, DataBySessionHasSensorID dataBySessionHasSensorID){
         List<SessionHasSensorModel> sessionHasSensorModels = new ArrayList<>();
         // Dostosuj IP zgodnie ze specyfikacją własnego serwera
-        String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/sessionhassensorrest/viewsamples?idSensor="+sessionID;//do napisania akcja w yii php
+        String url = "http://"+ServerInfo.ipAdress+":8080/PolitechnikaModel/web/sessionhassensorrest/viewsamples?idSensor="+sessionID;//do napisania akcja w yii php
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url,null, new
                 Response.Listener<JSONArray>() {
                     @Override
@@ -77,7 +77,7 @@ public class SessionHasSensorDataService {
     }
 
     public void postSessionHasSensorDBData(SessionHasSensorModel sessionHasSensorModel){
-        String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/sessionhassensorrests";
+        String url = "http://"+ServerInfo.ipAdress+":8080/PolitechnikaModel/web/sessionhassensorrests";
         JSONObject  sessionHasSensorData;
         sessionHasSensorData = sessionDataToJSON(sessionHasSensorModel);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url,sessionHasSensorData, new
@@ -96,7 +96,7 @@ public class SessionHasSensorDataService {
     }
 
     public void deleteSessionHasSensorDBData(String idSession){
-        String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/sessionhassensorrests/"+idSession;
+        String url = "http://"+ServerInfo.ipAdress+":8080/PolitechnikaModel/web/sessionhassensorrests/"+idSession;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.DELETE, url, null, new
                 Response.Listener<JSONObject>() {
                     @Override

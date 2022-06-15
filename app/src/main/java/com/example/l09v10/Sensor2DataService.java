@@ -27,11 +27,11 @@ public class Sensor2DataService {
         void onError(String message);
         void onResponse(List<SensorModel> sensorModel);
     }
-    ServerInfo serverInfo = new ServerInfo();
+
     public void getSensorDBData(String deviceID, DataBySensorID dataBySensorID){
         List<SensorModel> sensorModels = new ArrayList<>();
         // Dostosuj IP zgodnie ze specyfikacją własnego serwera
-        String url = "http://+"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/sensorrest/viewsensors?idDevice="+deviceID;
+        String url = "http://+"+ServerInfo.ipAdress+":8080/PolitechnikaModel/web/sensorrest/viewsensors?idDevice="+deviceID;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url,null, new
                 Response.Listener<JSONArray>() {
                     @Override
@@ -75,7 +75,7 @@ public class Sensor2DataService {
         return sensorData;
     }
     public void postSensorDBData(SensorModel sensorModel){
-        String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/sensorrests";
+        String url = "http://"+ServerInfo.ipAdress+":8080/PolitechnikaModel/web/sensorrests";
         JSONObject  sensorData;
         sensorData = sensorDataToJSON(sensorModel);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url,sensorData, new
@@ -94,7 +94,7 @@ public class Sensor2DataService {
     }
 
     public void deleteSensorDBData(String idDevice){
-        String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/sensorrests/"+idDevice;
+        String url = "http://"+ServerInfo.ipAdress+":8080/PolitechnikaModel/web/sensorrests/"+idDevice;
         //JSONObject deviceData;
         //deviceData = deviceDataToJSON(nevDeviceModel);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.DELETE, url, null, new

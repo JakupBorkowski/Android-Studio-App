@@ -28,11 +28,11 @@ public class SessionDataService {
         void onError(String message);
         void onResponse(List<SessionModel> sessionModel);
     }
-    ServerInfo serverInfo = new ServerInfo();
+
     public void getSessionDBData(String sessionID, DataBySessionID dataBySessionID){
         List<SessionModel> sessionModels = new ArrayList<>();
         // Dostosuj IP zgodnie ze specyfikacją własnego serwera
-        String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/samplerest/viewsamples?idSensor="+sessionID;//do napisania akcja w yii php
+        String url = "http://"+ServerInfo.ipAdress+":8080/PolitechnikaModel/web/samplerest/viewsamples?idSensor="+sessionID;//do napisania akcja w yii php
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url,null, new
                 Response.Listener<JSONArray>() {
                     @Override
@@ -65,7 +65,7 @@ public class SessionDataService {
     public void getSessionBySessionIdDBData(String sessionID, DataBySessionID dataBySessionID){
         List<SessionModel> sessionModels = new ArrayList<>();
         // Dostosuj IP zgodnie ze specyfikacją własnego serwera
-        String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/sessionrest/find-all-samples-sql?idSession="+sessionID;
+        String url = "http://"+ServerInfo.ipAdress+":8080/PolitechnikaModel/web/sessionrest/find-all-samples-sql?idSession="+sessionID;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url,null, new
                 Response.Listener<JSONArray>() {
                     @Override
@@ -113,7 +113,7 @@ public class SessionDataService {
     }
 
     public void postSessionDBData(SessionModel sessionModel){
-        String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/sessionrests";
+        String url = "http://"+ServerInfo.ipAdress+":8080/PolitechnikaModel/web/sessionrests";
         JSONObject  sessionData;
         sessionData = sessionDataToJSON(sessionModel);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url,sessionData, new
@@ -138,7 +138,7 @@ public class SessionDataService {
     }
 
     public void deleteSessionDBData(String idSession){
-        String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/sessionrests/"+idSession;
+        String url = "http://"+ServerInfo.ipAdress+":8080/PolitechnikaModel/web/sessionrests/"+idSession;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.DELETE, url, null, new
                 Response.Listener<JSONObject>() {
                     @Override

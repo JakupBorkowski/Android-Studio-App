@@ -33,11 +33,10 @@ import java.util.List;
             void onError(String message);
             void onResponse(List<NevDeviceModel> nevDeviceModel);
         }
-        ServerInfo serverInfo = new ServerInfo();
         public void getDeviceDBData(String deviceID, DataByDeviceID dataByDeviceID){
             List<NevDeviceModel> nevDeviceModels = new ArrayList<>();
             // Dostosuj IP zgodnie ze specyfikacją własnego serwera
-            String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/samplerest/viewsamples?idSensor="+deviceID;//do napisania akcja w yii php
+            String url = "http://"+ServerInfo.ipAdress+":8080/PolitechnikaModel/web/samplerest/viewsamples?idSensor="+deviceID;//do napisania akcja w yii php
             JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url,null, new
                     Response.Listener<JSONArray>() {
                         @Override
@@ -82,7 +81,7 @@ import java.util.List;
             return deviceData;
         }
         public void postDeviceDBData(NevDeviceModel nevDeviceModel){
-            String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/devicerests";
+            String url = "http://"+ServerInfo.ipAdress+":8080/PolitechnikaModel/web/devicerests";
             JSONObject deviceData;
             deviceData = deviceDataToJSON(nevDeviceModel);
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url,deviceData, new
@@ -101,7 +100,7 @@ import java.util.List;
         }
 
         public void deleteDeviceDBData(String idDevice){
-            String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/devicerests/"+idDevice;
+            String url = "http://"+ServerInfo.ipAdress+":8080/PolitechnikaModel/web/devicerests/"+idDevice;
             //JSONObject deviceData;
             //deviceData = deviceDataToJSON(nevDeviceModel);
             JsonObjectRequest request = new JsonObjectRequest(Request.Method.DELETE, url, null, new

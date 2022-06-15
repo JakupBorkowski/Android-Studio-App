@@ -1,7 +1,7 @@
 package com.example.l09v10;
 
 public class ServerInfo {
-    private String ipAdress = "172.20.10.2";
+    public static String ipAdress = "192.168.1.3";
     public static int idSesji;
 
 

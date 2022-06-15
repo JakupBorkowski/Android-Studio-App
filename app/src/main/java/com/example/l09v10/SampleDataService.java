@@ -27,11 +27,10 @@ public class SampleDataService {
         void onError(String message);
         void onResponse(List<SampleModel> sampleModel);
     }
-    ServerInfo serverInfo = new ServerInfo();
     public void getSampleDBData(String sensorID, DataBySampleID dataBySampleID){
         List<SampleModel> sampleModels = new ArrayList<>();
         // Dostosuj IP zgodnie ze specyfikacją własnego serwera
-        String url = "http://+"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/samplerest/viewsensors?idSensor="+sensorID;
+        String url = "http://+"+ServerInfo.ipAdress+":8080/PolitechnikaModel/web/samplerest/viewsensors?idSensor="+sensorID;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url,null, new
                 Response.Listener<JSONArray>() {
                     @Override
@@ -64,7 +63,7 @@ public class SampleDataService {
     public void getSampleBySessionIdDBData(String sessionID, DataBySampleID dataBySampleID){
         List<SampleModel> sampleModels = new ArrayList<>();
         // Dostosuj IP zgodnie ze specyfikacją własnego serwera
-        String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/sessionrest/find-all-samples-sql?idSession="+sessionID;
+        String url = "http://"+ServerInfo.ipAdress+":8080/PolitechnikaModel/web/sessionrest/find-all-samples-sql?idSession="+sessionID;
         url="http://172.20.10.2:8080/PolitechnikaModel/web/sessionrest/find-all-samples-sql?idSession=3";
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url,null, new
                 Response.Listener<JSONArray>() {
@@ -113,7 +112,7 @@ public class SampleDataService {
         return sampleData;
     }
     public void postSampleDBData(SampleModel sampleModel){
-        String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/samplerests";
+        String url = "http://"+ServerInfo.ipAdress+":8080/PolitechnikaModel/web/samplerests";
         JSONObject  sampleData;
         sampleData = sampleDataToJSON(sampleModel);
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url,sampleData, new
@@ -132,7 +131,7 @@ public class SampleDataService {
     }
 
     public void deleteSensorDBData(String idSample){
-        String url = "http://"+serverInfo.getIpAdress()+":8080/PolitechnikaModel/web/samplerests/"+idSample;
+        String url = "http://"+ServerInfo.ipAdress+":8080/PolitechnikaModel/web/samplerests/"+idSample;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.DELETE, url, null, new
                 Response.Listener<JSONObject>() {
                     @Override
