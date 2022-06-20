@@ -28,7 +28,7 @@
         android:ems="10"
         android:hint="okres [ms]"
         android:inputType="number"
-        android:text="100"
+        android:text="1000"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

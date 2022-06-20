@@ -35,6 +35,7 @@ public class SensorDataService {
         void onResponse(List<GyroscopeModel> gyroscopeModel);
     }
 
+
     public void getSensorDBData(String sensorID, DataBySensorID dataBySensorID){
         List<GyroscopeModel> gyroscopeModels = new ArrayList<>();
         // Dostosuj IP zgodnie ze specyfikacją własnego serwera
@@ -48,16 +49,10 @@ public class SensorDataService {
                             Toast.makeText(context, s,Toast.LENGTH_SHORT).show();
 
                             for(int i=0;i<response.length();i++) {
- /* Miejsce na pętlę zapisującą odebrane z serwera dane do listy klas
-/ GyroscopeModel.
- Zmienna JSONArray response zawiera tablicę obiektów reprezentujących dane
-/ z serwera.
- Kolejne obiekty można odczytać wykorzystując kod:*/
-                                JSONObject oneSampleFromAPI = (JSONObject)response.get(i);
-                                //ObjectMapper objectMapper = new ObjectMapper();
 
-                                //GyroscopeModel gyroscopeModel = objectMapper.readValue((DataInput) oneSampleFromAPI, GyroscopeModel.class);
-                                System.out.println(oneSampleFromAPI);
+                                JSONObject oneSampleFromAPI = (JSONObject)response.get(i);
+
+                                System.out.println("TESTTTT w klasie sensordataservice " + oneSampleFromAPI);
                                 oneSampleFromAPI.getInt("idSensor");
                                 GyroscopeModel gyroscopeModel = new GyroscopeModel(oneSampleFromAPI.getInt("idSample"),oneSampleFromAPI.getInt("idSensor"), (float) oneSampleFromAPI.getDouble("value_1"),(float) oneSampleFromAPI.getDouble("value_2"),(float) oneSampleFromAPI.getDouble("value_3"),oneSampleFromAPI.getString("timestamp"));
                                 gyroscopeModels.add(gyroscopeModel);

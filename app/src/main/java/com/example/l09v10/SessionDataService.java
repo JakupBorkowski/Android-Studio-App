@@ -18,7 +18,7 @@ import java.util.List;
 
 public class SessionDataService {
     Context context;
-
+    public static int idTmp=0;
     public SessionDataService(Context context)
     {
         this.context=context;
@@ -29,10 +29,10 @@ public class SessionDataService {
         void onResponse(List<SessionModel> sessionModel);
     }
 
-    public void getSessionDBData(String sessionID, DataBySessionID dataBySessionID){
+    public void getSensorDBData(String sensorID, DataBySessionID dataBySessionID){
         List<SessionModel> sessionModels = new ArrayList<>();
         // Dostosuj IP zgodnie ze specyfikacją własnego serwera
-        String url = "http://"+ServerInfo.ipAdress+":8080/PolitechnikaModel/web/samplerest/viewsamples?idSensor="+sessionID;//do napisania akcja w yii php
+        String url = "http://"+ServerInfo.ipAdress+":8080/PolitechnikaModel/web/sessionrest/find-session-by-timestamp?timestamp="+sensorID;
         JsonArrayRequest request = new JsonArrayRequest(Request.Method.GET, url,null, new
                 Response.Listener<JSONArray>() {
                     @Override
@@ -42,10 +42,16 @@ public class SessionDataService {
                             Toast.makeText(context, s,Toast.LENGTH_SHORT).show();
 
                             for(int i=0;i<response.length();i++) {
+
                                 JSONObject oneSampleFromAPI = (JSONObject)response.get(i);
 
-                                SessionModel sessionModel= new SessionModel(oneSampleFromAPI.getInt("idSession"),oneSampleFromAPI.getString("name"), oneSampleFromAPI.getString("start"),oneSampleFromAPI.getInt("samples"),(float)oneSampleFromAPI.getDouble("tp"));
+                                System.out.println(oneSampleFromAPI);
+                                SessionModel sessionModel = new SessionModel(oneSampleFromAPI.getInt("idSession"),oneSampleFromAPI.getString("name"), oneSampleFromAPI.getString("start"), oneSampleFromAPI.getInt("samples"),(float) oneSampleFromAPI.getDouble("tp"));
+                                idTmp=sessionModel.getIdSession();
+
+                                System.out.println("ID TMP PO ZMIANIE:   " + idTmp);
                                 sessionModels.add(sessionModel);
+
 
                             }
                             dataBySessionID.onResponse(sessionModels);
@@ -61,6 +67,7 @@ public class SessionDataService {
         });
         MySingleton.getInstance(context).addToRequestQueue(request);
     }
+
 
     public void getSessionBySessionIdDBData(String sessionID, DataBySessionID dataBySessionID){
         List<SessionModel> sessionModels = new ArrayList<>();

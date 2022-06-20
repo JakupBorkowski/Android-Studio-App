@@ -49,6 +49,7 @@ public class CheckSamples extends AppCompatActivity implements SensorEventListen
 
         SampleDataService sampleDataService = new SampleDataService(CheckSamples.this);
 SensorDataService sensorDataService = new SensorDataService(CheckSamples.this);
+        SessionDataService sessionDataService = new SessionDataService(CheckSamples.this);
         //tv_SensorData =findViewById(R.id.actualSensorData);
         btn_getSensorData=findViewById(R.id.getSensorData2);
         //btn_postSensorData=findViewById(R.id.postSensorData);
@@ -69,6 +70,7 @@ SensorDataService sensorDataService = new SensorDataService(CheckSamples.this);
                             }
                             @Override
                             public void onResponse(List<GyroscopeModel> sampleModel) {
+                                System.out.println("TIMESTAMP PIERWSZEJ PROBKI" +sampleModel.get(0).getTimestamp());
                                 ArrayAdapter arrayAdapter = new ArrayAdapter(CheckSamples.this,
                                         android.R.layout.simple_list_item_1, sampleModel);
                                 lv_dbSensorData.setAdapter(arrayAdapter);
@@ -77,6 +79,7 @@ SensorDataService sensorDataService = new SensorDataService(CheckSamples.this);
 
             }
         });
+
 
         sensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
         if(sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)!=null)
